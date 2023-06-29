@@ -1,15 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 export default function View({ data, handleUpdate, handleDelete }) {
-  // const data = localStorage.getItem("product");
-  // const data = JSON.parse(getLocalForm);
-  // const data = JSON.parse(localStorage.getItem("products"));
-  // console.log(datas);
-  // useEffect(() => {
-  //   if (data === null) {
-  //     return alert("ahahahh?");
-  //   }
-  // }, []);
   return (
     <table className="table container">
       <thead>
@@ -24,7 +15,6 @@ export default function View({ data, handleUpdate, handleDelete }) {
       </thead>
       <tbody>
         {data.map((product) => {
-          // console.log([i + 0]);
           return (
             <tr key={product.id} className="m-auto">
               <td>{product.namaBarang}</td>
@@ -34,7 +24,7 @@ export default function View({ data, handleUpdate, handleDelete }) {
               <td>
                 <img
                   src={product.image}
-                  className=" "
+                  alt="img"
                   style={{ width: "50px", height: "50px" }}
                 />
               </td>

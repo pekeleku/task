@@ -1,20 +1,11 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import View from "./View";
 import { uid } from "uid";
 import Input from "./Input";
 
 export default function Form() {
-  const [products, setProduct] = useState([
-    // {
-    //   id: 12323,
-    //   // fotoBarang: ""
-    //   namaBarang: "gelang",
-    //   hargaBeli: 20000,
-    //   hargaJual: 50000,
-    //   stock: 4,
-    // },
-  ]);
+  const [products, setProduct] = useState([]);
   const [image, setImage] = useState(null);
 
   const [isUpdate, setIsUpadate] = useState({ id: null, status: false });
@@ -24,20 +15,16 @@ export default function Form() {
     hargaJual: 0,
     stock: 0,
   });
-  // useEffect(() => {
-  //   const s = JSON.parse(localStorage.getItem("products"));
-  //   setProduct(s);
-  //   console.log(s);
-  // }, []);
+
   const handleImage = (e) => {
     let file = e.target.files[0];
-    console.log(file);
+
     if (file.size > 100000) {
-      alert("file gambar harus maksimal 100 kb");
+      return alert("file gambar  maksimal 100 kb");
     }
     setImage(URL.createObjectURL(file));
   };
-  const handleCange = (e) => {
+  const handleChange = (e) => {
     let data = { ...formData };
     data[e.target.name] = e.target.value;
     setFormData(data);
@@ -45,16 +32,10 @@ export default function Form() {
   const handleSubmit = (e) => {
     e.preventDefault();
     let data = [...products];
-    // if (
-    //   formData.namaBarang === "" ||
-    //   formData.hargaBeli === 0 ||
-    //   formData.hargaJual === 0 ||
-    //   formData.stock === 0 ||
-    //   image === null
-    // ) {
-    //   alert("harus mengisi semua form ");
-    //   return false;
-    // }
+    // bug disisni
+    if (formData.namaBarang === "") {
+      return alert("harus mengisi semua form ");
+    }
     if (isUpdate.status) {
       data.forEach((product) => {
         if (product.id === isUpdate.id) {
@@ -75,13 +56,12 @@ export default function Form() {
         stock: formData.stock,
       });
     }
-    // localStorage.setItem("products", JSON.stringify(data));
 
     setProduct(data);
 
+    setImage(null);
     setFormData({ namaBarang: "", hargaBeli: 0, hargaJual: 0, stock: 0 });
     setIsUpadate({ id: null, status: false });
-    setImage(null);
   };
   const handleUpdate = (id) => {
     let data = [...products];
@@ -114,7 +94,6 @@ export default function Form() {
               label={"FotoBarang"}
               type="file"
               className="form-control"
-              id="fotoBarang"
               name="image"
               onChange={handleImage}
               accept=".png, .jpg"
@@ -125,8 +104,7 @@ export default function Form() {
               label={"Nama Barang"}
               type="text"
               name="namaBarang"
-              onChange={handleCange}
-              id="namaBarang"
+              onChange={handleChange}
               value={formData.namaBarang}
             />
           </div>
@@ -135,10 +113,9 @@ export default function Form() {
               label={"Harga Beli"}
               type="number"
               className="form-control"
-              id="hargaBeli"
               value={formData.hargaBeli}
               name="hargaBeli"
-              onChange={handleCange}
+              onChange={handleChange}
             />
           </div>
           <div className="mb-3">
@@ -146,10 +123,9 @@ export default function Form() {
               label={"Harga Jual"}
               type="number"
               className="form-control"
-              id="hargajual"
               value={formData.hargaJual}
               name="hargaJual"
-              onChange={handleCange}
+              onChange={handleChange}
             />
           </div>
           <div className="mb-3">
@@ -157,10 +133,9 @@ export default function Form() {
               label={"Stock"}
               type="number"
               className="form-control"
-              id="stock"
               value={formData.stock}
               name="stock"
-              onChange={handleCange}
+              onChange={handleChange}
             />
           </div>
 
